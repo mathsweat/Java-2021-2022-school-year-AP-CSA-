@@ -1,0 +1,61 @@
+/* Assignment 2 - Control Tower */
+/* Class name - must be "Assignment2" in order to run */
+import java.util.Scanner;
+import assignment2.Airplane;
+
+public class Assignment2
+{
+  public static void main(String[] args)
+  {
+    Scanner scan = new Scanner(System.in);
+    
+    //initial positions
+    System.out.println("Enter the details of the second airplane (call-sign, distance, bearing and altitude):");
+    
+    Airplane plane1orig = new Airplane();
+    //object creation
+    double x=plane1orig.getAlt();
+    
+    String cs = scan.nextLine();
+    cs = cs.toUpperCase();
+    double dist = scan.nextDouble();
+    int dir = scan.nextInt();
+    int alt = scan.nextInt();
+    Airplane plane2orig = new Airplane(cs, dist, dir, alt);
+    double y=plane2orig.getAlt();
+    
+    System.out.println();
+    
+    System.out.println("Initial Positions: ");
+    System.out.println("\"Airplane 1\": "+plane1orig);
+    System.out.println("\"Airplane 2\": "+plane2orig);
+    int altorig = (int) Math.abs(x-y);
+    
+    System.out.println("The distance between the planes is "+ plane1orig.distTo(plane2orig)+" miles.");
+    System.out.println("The difference in height between the planes is "+altorig+" feet.\n");
+    
+    //new positions
+    plane1orig.gainAlt();
+    plane1orig.gainAlt();
+    plane1orig.gainAlt();
+    plane1orig.gainAlt();
+    plane1orig.move(10.5,50);
+    
+    plane2orig.loseAlt();
+    plane2orig.loseAlt();
+    plane2orig.move(8.0,125);
+    
+    System.out.println("New Positions: ");
+    System.out.println("\"Airplane 1\": "+plane1orig);
+    System.out.println("\"Airplane 2\": "+plane2orig);
+    
+    double x2=plane1orig.getAlt();
+    double y2=plane2orig.getAlt();
+    int altorig2 = (int) Math.abs(x2-y2);
+    
+    
+    System.out.println("The distance between the planes is "+ plane1orig.distTo(plane2orig)+" miles.");
+    System.out.println("The difference in height between the planes is "+altorig2+" feet.\n");
+    
+  }
+}
