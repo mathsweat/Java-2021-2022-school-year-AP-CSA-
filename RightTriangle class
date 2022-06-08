@@ -1,0 +1,160 @@
+public class RightTriangle
+{
+  //Fields
+  private double base;
+  private double height;
+  
+  //Constructor
+  public RightTriangle(double b, double h)
+  {
+    if(b>0)
+    {
+      base=b;
+    }
+    else
+    {
+      base=1;
+    }
+    if(h>0)
+    {
+      height=h;
+    }
+    else
+    {
+      height=1;
+    }
+
+  }
+  
+  public RightTriangle()
+  {
+    base=1;
+    height=1;
+  }
+  
+  //base mutator
+  public void setBase(double b) //method 7
+  {
+    if(b>0)
+    {
+      base=b;
+    }
+  }
+  
+  //base accessor
+  public double getBase() //method 3
+  {
+    return base;
+  }
+  //height mutator
+  public void setHeight(double h) //method 8
+  {
+    if(h>0)
+    {
+      height=h;
+    }
+  }
+  
+  //height accessor
+  public double getHeight() //method 4
+  {
+    return height;
+  }
+  
+  public boolean equals(RightTriangle other) //method 1
+  {
+    if(base==other.getBase() && height==other.getHeight())
+    {
+      return true;
+    }
+    return false;
+  }
+  
+  public double getArea() //method 2
+  {
+    double area=(base*height)/2;
+    return area;
+  }
+  
+  public double getHypotenuse() //method 5
+  {
+    double x = Math.pow(base,2);
+    double y = Math.pow(height,2);
+    double hypotenuse = Math.sqrt(x+y);
+    return hypotenuse;
+  }
+  
+  public double getPerimeter() //method 6
+  {
+    double p = base+height+getHypotenuse();
+    return p;
+  }
+  
+  public String toString() 
+  {
+    return "right triangle with base "+ base+", height "+height+", hypotenuse "+getHypotenuse();
+  }
+
+
+
+import java.util.Scanner;
+
+public class runner_RightTriangle{
+  public static void main(String[] args){
+    Scanner scan = new Scanner(System.in);
+    RightTriangle t = new RightTriangle();
+    String instruction = "";
+    while(!instruction.equals("q")){
+      System.out.println("Type the name of the method to test. Type c to construct a new triangle, q to quit.");
+      instruction = scan.nextLine();
+      if(instruction.equals("getArea")){
+        System.out.println(t.getArea());
+      }
+      else if(instruction.equals("getBase")){
+        System.out.println(t.getBase());
+      }
+      else if(instruction.equals("getHeight")){
+        System.out.println(t.getHeight());
+      }
+      else if(instruction.equals("getHypotenuse")){
+        System.out.println(t.getHypotenuse());
+      }
+      else if(instruction.equals("getPerimeter")){
+        System.out.println(t.getPerimeter());
+      }
+      else if(instruction.equals("toString")){
+        System.out.println(t);
+      }
+      else if(instruction.equals("setBase")){
+        System.out.println("Enter parameter value:");
+        double arg = scan.nextDouble();
+        t.setBase(arg);
+        scan.nextLine();
+      }
+      else if(instruction.equals("setHeight")){
+        System.out.println("Enter parameter value:");
+        double arg = scan.nextDouble();
+        t.setHeight(arg);
+        scan.nextLine();
+      }
+      else if(instruction.equals("equals")){
+        System.out.println("Enter base and height:");
+        double bs = scan.nextDouble();
+        double ht = scan.nextDouble();
+        RightTriangle tOther = new RightTriangle(bs, ht);
+        System.out.println(t.equals(tOther));
+        scan.nextLine();
+      }
+      else if(instruction.equals("c")){
+        System.out.println("Enter base and height:");
+        double bs = scan.nextDouble();
+        double ht = scan.nextDouble();
+        t = new RightTriangle(bs, ht);
+        scan.nextLine();
+      }
+      else if(!instruction.equals("q")){
+        System.out.println("Not recognized.");
+      }
+    }
+  }
+}
