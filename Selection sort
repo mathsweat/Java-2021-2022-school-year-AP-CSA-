@@ -1,0 +1,47 @@
+public class U7_L5_Activity_One
+{
+
+  public static void sortAndPrint(String[] list)
+  {
+    String temp;
+    for (int j = 0; j < list.length - 1; j++)
+    {
+      int minIndex = j;
+      for (int k = j + 1; k < list.length; k++)
+      {
+        if (list[k].compareTo(list[minIndex])<0)
+        {
+          minIndex = k;
+          
+        }
+      }
+      temp = list[j];
+      list[j] = list[minIndex];
+      list[minIndex] = temp;
+    }
+    
+    for(int i=0; i<list.length; i++)
+    {
+      System.out.print(list[i]+" ");
+    }
+    
+  }
+  
+}
+
+
+import java.util.Scanner;
+public class runner_U7_L5_Activity_One{
+  public static void main(String[] args){
+    Scanner scan = new Scanner(System.in);
+    System.out.println("Enter array length:");
+    int len = scan.nextInt();
+    scan.nextLine();
+    String[] wordList = new String[len];
+    System.out.println("Enter values:");
+    for(int i = 0; i < len; i++){
+      wordList[i] = scan.nextLine();
+    }
+    U7_L5_Activity_One.sortAndPrint(wordList);
+  }
+}
