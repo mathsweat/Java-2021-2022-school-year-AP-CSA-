@@ -1,0 +1,23 @@
+class U10_L3_template
+{
+  public static int recursiveBinarySearch(int[] array, int target, int low, int high)
+  {
+    int mid = (low + high)/2;
+    // base case: check mid element
+    if (target == array[mid]) {
+      return mid;
+    }
+    // base case: check if we've run out of elements
+    if(high < low){
+      return -1; // not found
+    }
+    // recursive call: search low to mid
+    if (target < array[mid]){
+      return recursiveBinarySearch(array, target, low, mid - 1);
+    }
+    // recursive call: search mid to high
+    if (target > array[mid]){
+      return recursiveBinarySearch(array, target, mid + 1, high);
+    }
+    return -1;
+  }
