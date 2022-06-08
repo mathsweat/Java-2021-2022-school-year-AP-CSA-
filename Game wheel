@@ -1,0 +1,341 @@
+import java.util.ArrayList;
+
+public class Game
+{
+  public static void play(GameWheel g)
+  {
+    String s="";
+    int sum=0;
+    boolean a=true;
+    ArrayList<String> colors= new ArrayList<String>();
+    
+    for(int i=0; i<3; i++)
+    {
+      int x=(int)(Math.random()*20);
+      int amount=g.getSlice(x).getPrizeAmount();
+      colors.add(g.getSlice(x).getColor());
+      s+="Spin "+(i+1)+" - "+g.getSlice(x)+"\n";
+      sum+=amount;
+    }
+    
+    for(int i=0; i<colors.size()-1; i++)
+    {
+      if(colors.get(i).equals(colors.get(i+1)))
+      {
+        continue;
+      }
+      else
+      {
+        a=false;
+      }
+    }
+    if (a==true) 
+    {
+      sum *= 2;
+      System.out.println("Total prize money: $" + sum + "\n");
+      System.out.println(s);
+      System.out.println("Three " + colors.get(0) + "s = double your money!");
+    } 
+    else 
+    {
+      System.out.println("Total prize money: $" + sum + "\n");
+      System.out.println(s);
+    }
+  }
+}
+
+
+import java.util.ArrayList;
+
+public class GameWheel
+{
+  private ArrayList<Slice> slices; // List of slices making up the wheel
+  private int currentPos;   // Position of currently selected slice on wheel
+
+
+  /* Returns string representation of GameWheel with each numbered slice
+   * on a new line
+   */
+  public String toString()
+  {
+    //Implement the toString method here
+    String x="";
+    for(int i=0; i<slices.size(); i++)
+    {
+      x+=i +" - "+slices.get(i).toString()+"\n";
+    }
+    return x;
+  }
+
+
+  /* Randomizes the positions of the slices that are in the wheel, but without
+   * changing the pattern of the colors
+   */
+  public void scramble()
+  {
+    ArrayList<Slice> black = new ArrayList<Slice>();
+    ArrayList<Slice> red = new ArrayList<Slice>();
+    ArrayList<Slice> blue = new ArrayList<Slice>();
+    
+    for(int i=0; i<slices.size(); i++)
+    {
+      if(i%5==0)
+      {
+        black.add(slices.get(i));
+      }
+      else if(i%2==0 && i>=2)
+      {
+        blue.add(slices.get(i));
+      }
+      else
+      {
+        red.add(slices.get(i));
+      }
+    }
+    slices.clear();
+    
+    for(int i=0; i<20; i++)
+    {
+      if(i%5==0)
+      {
+        slices.add(black.remove((int)(Math.random() * black.size())));
+      }
+      else if(i%2==0)
+      {
+        slices.add(blue.remove((int)(Math.random() * blue.size())));
+      }
+      else
+      {
+        slices.add(red.remove((int)(Math.random() * red.size())));
+      }
+    }
+  }
+  
+  public static void sorter(ArrayList<Slice> list)
+  {
+    for(int i=1; i<list.size(); i++)
+    {
+      int y=list.get(i).getPrizeAmount();
+      for(int j=i; j>0; j--)
+      {
+        if(y>= list.get(j-1).getPrizeAmount())
+        {
+          break;
+        }
+        list.add(j-1, list.remove(j));
+      }
+    }
+  }
+
+  /* Sorts the positions of the slices that are in the wheel by prize amount,
+   * but without changing the pattern of the colors.
+   */
+  public void sort()
+  {
+    //Implement the sort method here
+    ArrayList<Slice> black = new ArrayList<Slice>();
+    ArrayList<Slice> red = new ArrayList<Slice>();
+    ArrayList<Slice> blue = new ArrayList<Slice>();
+    
+    for(int i=0; i<slices.size(); i++)
+    {
+      if(i%5==0)
+      {
+        black.add(slices.get(i));
+      }
+      else if(i%2==0 && i>=2)
+      {
+        blue.add(slices.get(i));
+      }
+      else
+      {
+        red.add(slices.get(i));
+      }
+    }
+    slices.clear();
+    sorter(black);
+    sorter(blue);
+    sorter(red);
+    
+    for(int i=0; i<20; i++)
+    {
+      if(i%5==0)
+      {
+        slices.add(black.remove(0));
+      }
+      else if(i%2==0)
+      {
+        slices.add(blue.remove(0));
+      }
+      else
+      {
+        slices.add(red.remove(0));
+      }
+    }
+  }
+
+  /* COMPLETED METHODS - YOU DO NOT NEED TO CHANGE THESE */
+
+  /* Creates a wheel with 20 preset slices
+   */
+  public GameWheel()
+  {
+    this(getStandardPrizes());
+  }
+
+  /* Creates a wheel with 20 slices, using values from array parameter
+   */
+  public GameWheel(int[] prizes)
+  {
+    currentPos = 0;
+    slices = new ArrayList<Slice>();
+    for(int i = 0; i < 20; i++){
+      int pa = 0;
+      String col = "blue";
+      if(i < prizes.length)
+        pa = prizes[i];
+      if (i%5 == 0)
+        col = "black";
+      else if (i%2 == 1)
+        col = "red";
+      slices.add(new Slice(col, pa));
+    }
+  }
+
+  /* Spins the wheel by so that a different slice is selected. Returns that
+   * slice (Note: the 10 slices following the current slice are more likely to
+   * be returned than the other 10).
+   */
+  public Slice spinWheel()
+  {
+    //spin power between range of 1-50 (inclusive)
+    int power = (int)(Math.random()*50 + 1);
+    int newPos = (currentPos + power) % slices.size();
+    currentPos = newPos;
+    return slices.get(currentPos);
+  }
+
+  public Slice getSlice(int i){
+    int sliceNum = i;
+    if(i < 0 || i > 19)
+      sliceNum = 0;
+    return slices.get(sliceNum);
+  }
+
+  // Makes an array with a standard list of prizes
+  private static int[] getStandardPrizes()
+  {
+    int[] arr = new int[20];
+    for (int i=0; i < 20; i++)
+    {
+      if (i%5 == 0)
+        arr[i] = i*1000;
+      else if (i%2 == 1)
+        arr[i] = i*100;
+      else
+        arr[i] = i*200;
+    }
+    return arr;
+  }
+}
+
+
+public class Slice
+{
+  private String color;
+  private int prizeAmount;
+
+
+  // Creates a slice with color c, and cash prize p
+  public Slice(String c, int p) {
+   color = c;
+   prizeAmount = p;
+  }
+
+
+  // Returns the cash prize in dollars for this slice
+  public int getPrizeAmount() {
+    return prizeAmount;
+  }
+
+
+  // Returns the color of this slice as a string
+  public String getColor() {
+    return color;
+  }
+
+
+  /* Returns a string representation of the slice in the following format:
+   * "Color: red, prize amount: $50".
+   */
+  public String toString() {
+    return "Color: " + color + ", Prize Amount: $" + prizeAmount;
+  }
+}
+
+
+
+import java.util.Scanner;
+
+public class runner_GameWheel{
+
+  private static Scanner scan;
+  private static String instruct;
+  private static GameWheel wheel;
+
+  public static void main(String[] args){
+    scan = new Scanner(System.in);
+    wheel = new GameWheel();
+    instruct = "";
+    while(!instruct.equals("q")){
+      System.out.println("Type \"p\" to play game, \"t\" to test GameWheel methods, \"q\" to quit.");
+      instruct = scan.nextLine();
+      if(instruct.equals("p"))
+        Game.play(wheel);
+      else if(instruct.equals("t"))
+        testMethods();
+      else if(!instruct.equals("q"))
+        System.out.print("Instruction not recognized");
+      System.out.println();
+    }
+  }
+
+  private static void testMethods(){
+    while(!instruct.equals("q") && !instruct.equals("m")){
+      System.out.println("Type GameWheel method to call (toString, scramble, sort). Or type \"m\" for main menu, \"q\" to quit");
+      instruct = scan.nextLine();
+      if(instruct.equals("toString"))
+        System.out.println(wheel);
+      else if(instruct.equals("scramble"))
+        wheel.scramble();
+      else if(instruct.equals("sort"))
+        wheel.sort();
+      else if(instruct.equals("new"))
+        wheel = new GameWheel(makeStarterArray());
+      else if(instruct.equals("random_prize_test"))
+        ranTest();
+      else if(!instruct.equals("q") && !instruct.equals("m"))
+        System.out.println("Instruction not recognized");
+    }
+  }
+
+  private static int[] makeStarterArray(){
+    int[] arr = new int[20];
+    for(int i = 0; i < 20; i++){
+      arr[i] = scan.nextInt();
+    }
+    scan.nextLine();
+    return arr;
+  }
+
+  private static void ranTest(){
+    int numLines = scan.nextInt();
+    for(int i = 0; i<numLines; i++){
+      wheel.scramble();
+      for(int j = 0; j < 20; j++)
+        System.out.print(wheel.getSlice(j).getPrizeAmount() + " ");
+      System.out.println();
+    }
+    scan.nextLine();
+  }
+}
