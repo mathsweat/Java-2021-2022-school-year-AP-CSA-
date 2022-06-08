@@ -1,0 +1,20 @@
+/* Lesson 2 Coding Activity Question 4 */
+
+import java.util.Scanner;
+
+public class U5_L2_Activity_Four
+{
+
+  /* Add the method realTime here */
+  
+  public static void realTime(int x)
+  {
+    int y = x/3600;
+    System.out.println("Hours: "+y);
+    int z = (x%3600)/60;
+    System.out.println("Minutes: "+z);
+    int a = (x%60);
+    System.out.println("Seconds: "+a);
+  }
+
+}
