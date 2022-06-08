@@ -1,0 +1,130 @@
+import java.util.Scanner;
+
+class Assignment4 {
+  public static void main(String[] args) {
+    
+    Scanner scan = new Scanner(System.in);
+    
+    int countv = 0; //initialize vowel letter count
+    int countr = 0; //initialize repeat letter count
+    String message = ""; //empty string we will add to for the new string
+    String letter = ""; //letter we are using for each loop
+    System.out.println("Type the message to be shortened");
+    String str = scan.nextLine();
+    str = str.toLowerCase();
+    System.out.println();
+    
+    
+    for(int i=0 ; i<str.length() ; i++)
+    {
+      
+      letter = str.substring(i,i+1);
+      
+      if(i==0)
+      {
+        message=message+letter; //first letter always stays
+      }
+      else if((!(str.substring(i-1,i).equals(" ")) && ((str.substring(i,i+1)).equals("a"))) || (!(str.substring(i-1,i).equals(" ")) && ((str.substring(i,i+1)).equals("e"))) || (!(str.substring(i-1,i).equals(" ")) && ((str.substring(i,i+1)).equals("i"))) || (!(str.substring(i-1,i).equals(" ")) && ((str.substring(i,i+1)).equals("o"))) || (!(str.substring(i-1,i).equals(" ")) && ((str.substring(i,i+1)).equals("u")))) //if a letter is not after a space and is a vowel don't add it 
+      {
+        letter="";
+        message=message+letter;
+        countv++;
+      }
+      else if(str.substring(i-1,i).equals(str.substring(i,i+1)))
+      {
+        letter="";
+        message=message+letter;
+        countr++;
+      }
+      else
+      {
+        message=message+letter; //if it isn't a repeat or vowel after space add to message
+      }
+    }  
+    System.out.println("Algorithm 1"); //prints for Algorithm 1
+    System.out.println("Vowels removed: "+countv);
+    System.out.println("Repeats removed: "+countr);
+    System.out.println("Algorithm 1 message: "+message);
+    System.out.println("Algorithm 1 characters saved: "+(countv+countr));
+    
+    //Algorithm 1 complete
+    System.out.println();
+    //Algorithm 2 *Thanks for the code on schoology*
+    
+    //create empty string for new message
+    String msg2 = "";
+    
+    //initialize counts
+    int uniqueCount = 0;
+    int ltrCount = 0;
+    int ltrCount2 = 0;
+    int ltrCount3 = 0;
+    int ltrCount4 = 0;
+    
+    //Go through each element in message
+    for(int j=0 ; j<str.length() ; j++)
+    {
+      //initailize variable for each letter
+      String ltr = str.substring(j, j+1);
+      
+      //create boolean variable that determnes if leeter already appeared
+      boolean alreadyUsed = false;
+      
+      //Only proceed if character is not a space
+      if(!ltr.equals(" "))
+      {
+        //check whether the letter has already appeared
+        for( int k=0 ; k<j ; k++)
+        {
+          if(str.substring(k,k+1).equals(str.substring(j,j+1)))
+          {
+            alreadyUsed = true;
+          }
+        }
+        
+        //if letter has not appeared, find how many times it repeats
+        if(!alreadyUsed)
+        {
+          //increment uniqueCount
+          uniqueCount++;
+          
+          //set letter count to zero
+          ltrCount = 0;
+          
+          //go through each letter and find how many times ltr repeats
+          for(int z=0 ; z<str.length() ; z++)
+          {
+            if(ltr.equals(str.substring(z,z+1)))
+            {
+              ltrCount++;
+            }
+          }
+          ltrCount2=1+ltrCount2;
+          //add to msg2
+          String fullnum = ltrCount+ltr;
+          msg2+=fullnum;
+        }
+        
+      }
+      
+      
+      
+    }
+    for(int a = 0 ; a<msg2.length() ; a++)
+      {
+        if(msg2.substring(a,a+1)!=" ")
+        {
+          ltrCount3++;
+        }
+      }
+    ltrCount4=str.length()-ltrCount3;
+      
+    System.out.println("Algorithm 2");
+    System.out.println("Unique characters found: "+uniqueCount);
+    System.out.println("Algorithm 2 message: "+msg2);
+    System.out.println("Algorithm 2 characters saved: "+ltrCount4);
+    
+    
+    
+  }
+}
