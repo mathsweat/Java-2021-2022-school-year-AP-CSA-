@@ -1,0 +1,63 @@
+/* Assignment 1 - Movie Ratings */
+import java.util.Scanner;
+
+class Assignment1 {
+  public static void main(String[] args) {
+    /* Assignment 1 - Movie Ratings */
+import java.util.Scanner;
+
+class Assignment1 {
+  public static void main(String[] args) {
+    Scanner scan = new Scanner(System.in);
+    
+    //name
+    System.out.println("Please enter movie name ");
+    String mname=scan.nextLine();
+    
+    String title=mname;
+    
+    //time
+    System.out.println("Please enter the running time in minutes.");
+    int runt=scan.nextInt();
+    
+    int hr=runt/60;
+    int min=runt%60;
+    
+    //web rating
+    System.out.println("Please enter ratings from the movie review website.");
+    int rate1=scan.nextInt();
+    int rate2=scan.nextInt();
+    int rate3=scan.nextInt();
+    
+    double rateavg=(rate1*1.0+rate2+rate3)/3;
+    
+    //group rate
+    System.out.println("Please enter ratings from the focus group.");
+    double grate1=scan.nextDouble();
+    double grate2=scan.nextDouble();
+    
+    double grateavg=(grate1+grate2)/2;
+    
+    //critic rating
+    System.out.print("Please enter the average movie critic rating.");
+    double critrate=scan.nextDouble();
+    
+    //Full average THIS DOESN'T WORK
+    double fullavg=((rateavg*0.2)+(grateavg*0.3)+(critrate*0.5));
+    //System.out.print("FULLAVG:"+fullavg);
+    int fullavg2=(int) (fullavg+0.5);
+    
+    System.out.println("Title: "+title);
+    System.out.println("Running time: "+hr+"h"+min);
+    System.out.println("Average website rating: "+rateavg);
+    System.out.println("Average focus group rating: "+grateavg);
+    System.out.println("Average movie critic rating: "+critrate);
+    System.out.println("Overall movie rating: "+fullavg2);
+    
+    
+    
+  }
+}
+    
+  }
+}
