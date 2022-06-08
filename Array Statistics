@@ -1,0 +1,280 @@
+public class NumStatsArray
+{
+
+  //Add a final private variable to hold double array
+  private final double[] arr;
+
+  public NumStatsArray(double[] a)
+  {
+    arr=a;
+  }
+
+  //Implement all methods as described
+  public String toString()
+  {
+    String orgstr="{";
+    for(int i=0; i<arr.length; i++)
+    {
+      orgstr=orgstr+arr[i];
+      if(arr[i]!=arr[arr.length-1]) //if we are on the last letter no comma after
+      {
+        orgstr=orgstr+", ";
+      }
+    }
+    orgstr=orgstr+"}";
+    return orgstr;
+  }
+
+  public double average()
+  {
+    double sum=0;
+    double avg=0;
+    for(double i : arr)
+    {
+      sum=sum+i;
+    }
+    avg=1.0*sum/(arr.length);
+    return avg;
+  }
+
+  public double range()
+  {
+    double max=arr[0];
+    double min=arr[0];
+    double finalnum = 0;
+    for(int i=0; i<arr.length; i++)
+    {
+      if(arr[i]>max)
+      {
+        max=arr[i];
+      }
+    }
+    for(int i=0; i<arr.length; i++)
+    {
+      if(arr[i]<min)
+      {
+        min=arr[i];
+      }
+    }
+    finalnum=max-min;
+    return finalnum;
+  }
+
+  public int sortStatus() 
+  {
+    //see if array is increasing
+    int count=0;
+    int sorted=1;
+    for(int i=0; i<arr.length-1; i++)
+    {
+      if(!(arr[i]<=arr[i+1]))
+      {
+        sorted=0;
+        break;
+      }
+    }
+    //see if array is decreasing only runs if previous loop broke so not array  increasing order
+    if(sorted!=1)
+    {
+      for(int j=0; j<arr.length-1; j++)
+      {
+        if(!(arr[j]>=arr[j+1]))
+        {
+          sorted=0;
+          count++;
+          break;
+        }
+      }
+      //if count doesn't increase decreasing order loop never broke so array in decreasing order
+      if(count==0)
+      {
+        sorted=-1;
+      }
+    }
+    return sorted;
+  }
+
+}
+
+
+
+public class StringStatsArray
+{
+
+  //Add a final private variable to hold String array
+  private final String[] arr2;
+
+  public StringStatsArray(String[] a)
+  {
+    arr2=a;
+  }
+
+  //Implement all methods as described
+  public String toString()
+  {
+    String orgstr="{\"";
+    for(int i=0; i<arr2.length; i++)
+    {
+      orgstr=orgstr+arr2[i];
+      if(arr2[i]!=arr2[arr2.length-1])
+      {
+        orgstr=orgstr+"\", \"";
+      }
+      else //if it is the last one just put a quote after
+      {
+        orgstr=orgstr+"\"";
+      }
+    }
+    orgstr=orgstr+"}";
+    return orgstr;
+  }
+
+  public double averageLength()
+  {
+    double sum=0;
+    double avg=0;
+    for(int j=0; j<arr2.length; j++)
+    {
+      sum=sum+arr2[j].length();
+    }
+    avg=1.0*sum/(arr2.length);
+    return avg;
+  }
+
+  public int search(String target)
+  {
+    for(int k=0; k<arr2.length; k++)
+    {
+      if(arr2[k].equals(target))
+      {
+        return k;
+      }
+    }
+    return -1;
+  }
+
+
+
+
+
+  public int sortStatus() 
+  {
+    if (arr2.length == 1) 
+    {
+      return 1;
+    }
+    int sort = 0;
+    int [] index = new int[arr2.length];
+    final String [] finalstr = {"a", "b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+    for (int i =0; i < arr2.length; i++) 
+    {
+        String letter = arr2[i].substring(0,1);
+        for(int j = 0; j < finalstr.length; j++) 
+        {                
+            if(letter.equals(finalstr[j])) 
+            {
+              index[i] = j;
+            }
+        }
+    }
+    for(int i = 0; i < index.length; i++) 
+    {
+      if(i != index.length-1) 
+      {
+        if(index[i+1] >= index[i]) 
+        {
+          sort = 1;
+        } 
+        else 
+        {
+          sort = 0;
+          break;
+        }
+      }
+    }
+    if(sort == 1) 
+    {
+      return 1;
+    }
+    for(int i = index.length-1; i >=0 ; i--) 
+    {
+      if(i != 0) 
+      {
+        if (index[i-1] >= index[i]) 
+        {
+          sort = 1;
+        } 
+        else 
+        {
+          sort = 0;
+          break;
+        }
+      }
+    }
+    if (sort == 1) 
+    {
+      return -1;
+    }
+    return 0;
+  }
+
+}
+
+
+
+import java.util.Scanner;
+
+public class runner_StatsArray{
+
+  public static Scanner scan = new Scanner(System.in);
+
+  public static void main(String[] args){
+    int ans = 0;
+    while(ans != 3){
+      System.out.println("Test which class?\n1 - NumStatsArray\n2 - StringStatsArray \n3 - quit");
+      ans = scan.nextInt();
+      if(ans == 1)
+        testNums();
+      else if(ans == 2)
+        testStrings();
+      else if(ans != 3)
+        System.out.println("Not a valid choice");
+      System.out.println();
+    }
+  }
+
+  public static void testNums(){
+    System.out.println("Enter array length:");
+    int len = scan.nextInt();
+    double[] vals = new double[len];
+    System.out.println("Enter values:");
+    for(int i = 0; i < len; i++){
+      vals[i] = scan.nextDouble();
+    }
+    NumStatsArray nSA = new NumStatsArray(vals);
+    System.out.println("\nMethod returns:");
+    System.out.println("toString: " + nSA);
+    System.out.println("average: " + nSA.average());
+    System.out.println("range: " + nSA.range());
+    System.out.println("sortStatus: " + nSA.sortStatus());
+  }
+
+  public static void testStrings(){
+    System.out.println("Enter array length:");
+    int len = scan.nextInt();
+    String[] vals = new String[len];
+    scan.nextLine();
+    System.out.println("Enter values:");
+    for(int i = 0; i < len; i++){
+      vals[i] = scan.nextLine();
+    }
+    System.out.println("Enter String to search for:");
+    String searchVal = scan.nextLine();
+    StringStatsArray sSA = new StringStatsArray(vals);
+    System.out.println("\nMethod returns:");
+    System.out.println("toString: " + sSA);
+    System.out.println("averageLength: " + sSA.averageLength());
+    System.out.println("search: " + sSA.search(searchVal));
+    System.out.println("sortStatus: " + sSA.sortStatus());
+  }
+}
