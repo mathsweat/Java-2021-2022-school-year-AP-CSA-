@@ -1,0 +1,99 @@
+public class Vehicle
+{
+  private int location;
+  
+  //define vehicle
+  public Vehicle()
+  {
+    location=0;
+  }
+  
+  //location setter
+  public Vehicle(int loc)
+  {
+    if(loc>=-20 && loc<=20)
+    {
+      location=loc;
+    }
+    else
+    {
+      location=0;
+    }
+  }
+  
+  //move forwards one
+  public void forward()
+  {
+    if(location!=20)
+    {
+      location++;
+    }
+    else
+    {
+      location=20;
+    }
+  }
+  
+  //move backwards one
+  public void backward()
+  {
+    if(location!=-20)
+    {
+      location--;
+    }
+    else
+    {
+      location=-20;
+    }
+  }
+  //get the location
+  public int getLocation()
+  {
+    return location;
+  }
+  
+  public String toString()
+  {
+    String message="";
+    for(int i=1 ; i<=location+20 ; i++)
+    {
+      message+=" ";
+    }
+    return message+="@";
+  }
+  
+}
+
+import java.util.Scanner;
+
+public class runner_Vehicle
+{
+  public static void main (String str[]){
+    Scanner scan = new Scanner(System.in);
+    Vehicle v = new Vehicle ();
+    String instruction = "";
+    while(!instruction.equals("q")){
+      System.out.println(v);
+      System.out.println("Location: " + v.getLocation());
+      System.out.println("Type \"f\" to move forwards, \"b\" to move backwards, \"n\" for new vehicle, \"q\" to quit.");
+      instruction = scan.nextLine();
+      if(instruction.equals("f")){
+        v.forward();
+      }
+      else if(instruction.equals("b")){
+        v.backward();
+      }
+      else if(instruction.equals("n")){
+        System.out.println("Starting location for new vehicle?");
+        int start = scan.nextInt();
+        v = new Vehicle(start);
+        scan.nextLine();
+      }
+      else if(!instruction.equals("q")){
+        System.out.println("Instruction not recognized.");
+      }
+    }
+  }
+}
+
+
