@@ -1,0 +1,39 @@
+public class Post
+{
+  //Fields
+  private String user;
+  private String contents;
+  private int favorites;
+
+  //Constructor
+  public Post(String u, String c, int f)
+  {
+    user = u;
+    contents = c;
+    favorites = f;
+  }
+  
+  public String toString() 
+  {
+    return user + "\n" + contents + "\n\tFavorited by " + favorites+" users";
+  }
+  
+}
+
+import java.util.Scanner;
+
+public class runner_Post{
+  public static void main(String[] args){
+
+    Scanner scan = new Scanner(System.in);
+    System.out.println("Enter name:");
+    String n = scan.nextLine();
+    System.out.println("Enter post content:");
+    String m = scan.nextLine();
+    System.out.println("Enter number of favorites:");
+    int f = scan.nextInt();
+    Post p1 = new Post(n, m, f);
+    System.out.println("\n"+p1);
+
+  }
+}
