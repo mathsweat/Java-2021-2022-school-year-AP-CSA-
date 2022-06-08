@@ -1,0 +1,150 @@
+public class Coffee
+{
+  private String size;
+  private boolean isSkinny;
+  private int shots;
+  private String type;
+
+  public Coffee()
+  {
+    this("small", false, 1, "latte");
+  }
+
+  public Coffee(String size, boolean isSkinny, int shots, String type)
+  {
+    this.size = size;
+    this.isSkinny = isSkinny;
+    this.shots = shots;
+    this.type = type;
+  }
+
+  public String toString()
+  {
+    String s = size;
+    if (isSkinny)
+      s += " skinny";
+    return s + " " + shots + "-shot " + type;
+  }
+
+  public String getSize()
+  {
+    return size;
+  }
+
+  public int getPrice()
+  {
+    int price;
+    if (size.equals("extra large"))
+      price = 470;
+    else if (size.equals("large"))
+      price = 440;
+    else if (size.equals("medium"))
+      price = 360;
+    else
+      price = 330;
+
+    price += shots*30;
+    return price;
+  }
+}
+
+
+
+
+public class SpecialityCoffee extends Coffee
+{
+
+  // Additional member variable
+  private String flavor;
+
+  public SpecialityCoffee()
+  {
+    // Calls super-constructor to create default coffee then sets flavor
+    super();
+    flavor = "vanilla";
+  }
+
+  public SpecialityCoffee(String size, String type, String flavor)
+  {
+    // Calls constructor below with a mix of parameters and default values
+    this(size, false, 1, type, flavor);
+  }
+
+  public SpecialityCoffee(String size, boolean isSkinny, int shots, String type, String flavor)
+  {
+    // Calls super-constructor to set first 4 variables then sets flavor
+    super(size, isSkinny, shots, type);
+    this.flavor = flavor;
+  }
+
+  public String toString()
+  {
+    // Calls Coffee toString and appends flavor to end
+    return super.toString() + " with " + flavor;
+  }
+  
+  public int getPrice()
+  {
+    int x = super.getPrice();
+    
+    if((super.getSize()).equals("large") || (super.getSize()).equals("extra large"))
+    {
+      x+=70;
+    }
+    else
+    {
+      x+=50;
+    }
+    
+    return x;
+  }
+
+}
+
+
+import java.util.Scanner;
+public class runner_Coffee
+{
+
+  private static SpecialityCoffee c;
+
+  public static void main(String[] args)
+  {
+    Scanner scan = new Scanner(System.in);
+    System.out.println("Choose constructor to test:\n1 - SpecialityCoffee()\n2 - SpecialityCoffee(String size, String type, String flavor)\n3 - SpecialityCoffee(String size, boolean isSkinny, int shots, String type, String flavor)");
+    int which = scan.nextInt();
+    if (which == 1)
+    {
+      c = new SpecialityCoffee();
+    }
+    else if (which == 2 || which == 3)
+    {
+      scan.nextLine();
+      System.out.println("Size?");
+      String sz = scan.nextLine();
+      System.out.println("Type?");
+      String tp = scan.nextLine();
+      System.out.println("Flavor?");
+      String fl = scan.nextLine();
+      if (which == 3)
+      {
+        boolean iS = false;
+        System.out.println("Is Skinny (y/n)?");
+        String sk = scan.nextLine().toLowerCase();
+        if(sk.equals("y")||sk.equals("yes")||sk.equals("t")||sk.equals("true"));
+          iS = true;
+        System.out.println("Shots?");
+        int sh = scan.nextInt();
+        c = new SpecialityCoffee(sz, iS, sh, tp, fl);
+      }
+      else
+        c = new SpecialityCoffee(sz, tp, fl);
+    }
+    if(c != null)
+    {
+      System.out.println(c);
+      int p = c.getPrice();
+      System.out.println("$"+p/100 + "."+ (p%100)/10 + p%10);
+    }
+  }
+}
